@@ -1240,7 +1240,7 @@
                 <i class="bi bi-search"></i>
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari berdasarkan NOP atau Nama Wajib Pajak...">
             </div>
-            <button class="btn btn-primary" title="Refresh Data" onclick="location.reload()">
+            <button class="btn btn-primary" id="refreshBtn" title="Refresh Data">
                 <i class="bi bi-arrow-clockwise"></i>
             </button>
         </div>
@@ -2149,8 +2149,9 @@ async function savePaymentToSheet(nop, rowData, retry = 0) {
             renderTable(e.target.value);
         });
         // Refresh data dengan retry mechanism
-        document.getElementById('refreshBtn').addEventListener('click', function() {
-            fetchDataWithRetry();
+        document.getElementById('refreshBtn').addEventListener('click', async function() {
+            await fetchDataWithRetry();
+            await fetchChartData(); // <-- Tambahan! Chart akan ikut refresh sesuai data terbaru
         });
         
         // Fetch data dengan mekanisme retry - DENGAN FILTER BERDASARKAN ROLE
@@ -2370,5 +2371,6 @@ async function savePaymentToSheet(nop, rowData, retry = 0) {
     </script>
 </body>
 </html>
+
 
 
